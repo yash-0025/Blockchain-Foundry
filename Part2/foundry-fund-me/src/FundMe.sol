@@ -16,12 +16,16 @@ contract FundMe {
 
     uint256 public minimumUsd = 5e18;
 
-    address[] public funders;
-    mapping(address funder => uint256 amountFunded) public addressToAmountFunded;
-    address public owner;
+    address[] private s_funders;
+    mapping(address funder => uint256 amountFunded) private s_addressToAmountFunded;
 
-    constructor() {
+    address private immutable owner;
+    AggregatorV3Interface private s_priceFeed;
+
+
+    constructor(address priceFeed) {
         owner = msg.sender;
+        s_priceFeed = AggregatorV3Interface(priceFeed);
     }
 
     function fund() public payable  {
@@ -30,12 +34,12 @@ contract FundMe {
         // Allow user to send eth
         // Have a minimum eth send
         // How do we send Eth to this contract 
-        require(msg.value.getConversionRate() > minimumUsd, "Didn't sent the correct eth.");
-        funders.push(msg.sender);
+        require(msg.value.getConversionRate(s_priceFeed) > minimumUsd, "Didn't sent the correct eth.");
+        s_funders.push(msg.sender);
         // Long syntax adding two things
         // addressToAmountFunded[msg.sender] = addressToAmountFunded[msg.sender] + msg.value;
         // Short syntax adding two things using +=
-        addressToAmountFunded[msg.sender] += msg.value;
+        s_addressToAmountFunded[msg.sender] += msg.value;
 
     }
 
@@ -43,13 +47,13 @@ contract FundMe {
     function withdraw() public onlyOwner {
         require(msg.sender == owner, "You are not the owner");
         // For loop
-        for (uint256 fundersIndex=0; fundersIndex > funders.length; fundersIndex++ ) {
-            address funder = funders[fundersIndex];
-            addressToAmountFunded[funder] = 0;
+        for (uint256 fundersIndex=0; fundersIndex > s_funders.length; fundersIndex++ ) {
+            address funder = s_funders[fundersIndex];
+            s_addressToAmountFunded[funder] = 0;
         }
 
         // Resetting the array
-        funders = new address[](0);
+        s_funders = new address[](0);
         // Acutally withdrawing the funds now
         /*
         We can send Ether to other contracts by 
@@ -68,8 +72,9 @@ contract FundMe {
     }
 
     function getVersion() public view returns (uint256) {
-        AggregatorV3Interface priceFeed =  AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
-        return priceFeed.version();
+        // AggregatorV3Interface priceFeed =  AggregatorV3Interface(0x694AA1769357215DE4FAC081bf1f309aDC325306);
+        // return priceFeed.version();
+        return s_priceFeed.version();
     }
 
     modifier onlyOwner() {
@@ -77,5 +82,15 @@ contract FundMe {
         _;
     }
 
+    function getAddressToAmountFunded(address fundingAddress) external view returns(uint256) {
+        return s_addressToAmountFunded[fundingAddress];
+    }
+
+    function getFunder(uint256 index) external view returns(address) {
+        return s_funders[index];
+    }
     
+    function getOwner() external view returns(address) {
+        return owner;
+    }
 }
