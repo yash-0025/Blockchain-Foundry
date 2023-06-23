@@ -10,3 +10,6 @@
 [submodule "Part2/foundry-fund-me/lib/chainlink-brownie-contracts"]
 	path = Part2/foundry-fund-me/lib/chainlink-brownie-contracts
 	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+[submodule "Part2/foundry-fund-me/lib/foundry-devops"]
+	path = Part2/foundry-fund-me/lib/foundry-devops
+	url = https://github.com/Cyfrin/foundry-devops

@@ -2,8 +2,8 @@
 pragma solidity ^0.8.19;
 
 import {Test, console} from "forge-std/Test.sol";
-import {FundMe} from "../src/FundMe.sol";
-import {DeployFundMe} from "../script/DeployFundMe.s.sol";
+import {FundMe} from "../../src/FundMe.sol";
+import {DeployFundMe} from "../../script/DeployFundMe.s.sol";
 
 contract FundMeTest is Test {
     FundMe  fundMe;
@@ -123,6 +123,36 @@ modifier funded() {
         // ACT
         vm.startPrank(fundMe.getOwner());
         fundMe.withdraw();
+        vm.stopPrank();
+
+        //ASSERT
+        
+        assert(address(fundMe).balance == 0);
+        assert(startingFundMeBalance + startingOwnerBalance == fundMe.getOwner().balance);
+
+
+    }
+
+    function testWithDrawaWithAMultipleFunderCheaper() public funded {
+
+        // so here we will use hoax which is a combination of vm.prank and vm.deal to create a demo funder and funding it 
+        // Arrange
+        // So after upgrades in solidity we have to use uint160 for addresses 
+        uint160 numberOfFunders = 10;
+        uint160 startingFunderIndex = 1;
+
+        // Now we will loop through all the users to create their accounts to fund the contract 
+        for ( uint160 i = startingFunderIndex; i < numberOfFunders ; i++) {
+            hoax(address(i), SEND_VALUE);
+            fundMe.fund{value: SEND_VALUE}();
+        }
+
+        uint256 startingOwnerBalance = fundMe.getOwner().balance;
+        uint256 startingFundMeBalance = address(fundMe).balance;
+
+        // ACT
+        vm.startPrank(fundMe.getOwner());
+        fundMe.cheaperWithdraw();
         vm.stopPrank();
 
         //ASSERT
