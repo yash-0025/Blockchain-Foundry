@@ -13,3 +13,15 @@
 [submodule "Part2/foundry-fund-me/lib/foundry-devops"]
 	path = Part2/foundry-fund-me/lib/foundry-devops
 	url = https://github.com/Cyfrin/foundry-devops
+[submodule "Part2/lottery-smart-contract/lib/forge-std"]
+	path = Part2/lottery-smart-contract/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Part2/lottery-smart-contract/lib/chainlink-brownie-contracts"]
+	path = Part2/lottery-smart-contract/lib/chainlink-brownie-contracts
+	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+[submodule "Part2/lottery-smart-contract/lib/solmate"]
+	path = Part2/lottery-smart-contract/lib/solmate
+	url = https://github.com/transmissions11/solmate
+[submodule "Part2/lottery-smart-contract/lib/foundry-devops"]
+	path = Part2/lottery-smart-contract/lib/foundry-devops
+	url = https://github.com/ChainAccelOrg/foundry-devops
