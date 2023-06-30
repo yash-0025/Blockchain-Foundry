@@ -25,3 +25,9 @@
 [submodule "Part2/lottery-smart-contract/lib/foundry-devops"]
 	path = Part2/lottery-smart-contract/lib/foundry-devops
 	url = https://github.com/ChainAccelOrg/foundry-devops
+[submodule "Part2/erc20-token/lib/forge-std"]
+	path = Part2/erc20-token/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Part2/erc20-token/lib/openzeppelin-contracts"]
+	path = Part2/erc20-token/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
