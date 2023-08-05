@@ -49,3 +49,6 @@
 [submodule "Part3/stablecoin/lib/chainlink-brownie-contracts"]
 	path = Part3/stablecoin/lib/chainlink-brownie-contracts
 	url = https://github.com/smartcontractkit/chainlink-brownie-contracts
+[submodule "Part3/Upgradable/lib/forge-std"]
+	path = Part3/Upgradable/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
