@@ -64,3 +64,6 @@
 [submodule "Part3/Upgradable/lib/foundry-devops"]
 	path = Part3/Upgradable/lib/foundry-devops
 	url = https://github.com/Cyfrin/foundry-devops
+[submodule "Part3/Daos/lib/forge-std"]
+	path = Part3/Daos/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
